@@ -1,11 +1,16 @@
 import Map from "@/components/game/Map";
 import Player from "@/components/game/Player";
 import Cargo from "@/components/game/Cargo";
-import { useAppSelector } from "@/store/useHooks";
-import { selectCargos } from "@/store/features/Cargos";
+import { useCargo } from "@/composables/game/useCargo";
+import { useEffect } from "react";
 
 export default function GameView() {
-  const storeCargos = useAppSelector(selectCargos);
+  const { storeCargos, addCargo, createCargo } = useCargo();
+
+  useEffect(() => {
+    addCargo(createCargo({ x: 3, y: 3 }));
+    addCargo(createCargo({ x: 2, y: 5 }));
+  }, []);
 
   return (
     <>

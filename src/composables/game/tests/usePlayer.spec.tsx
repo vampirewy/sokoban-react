@@ -1,10 +1,11 @@
-import { beforeEach, describe, it, expect } from "vitest";
+import { beforeEach, describe, it, expect, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { usePlayer } from "../usePlayer";
 import { Provider } from "react-redux";
 import store from "@/store/store";
 import setupStore from "@/tests/helper/setupStore";
 import { setupMap } from "@/store/features/Map";
+import { usePlayer } from "../usePlayer";
+import { useCargo } from "../useCargo";
 
 describe("usePlayer", () => {
   describe("normal move", () => {
@@ -187,6 +188,100 @@ describe("usePlayer", () => {
 
       expect(player.current.player.x).toBe(1);
       expect(player.current.player.y).toBe(3);
+    });
+  });
+
+  describe("push cargo", () => {
+    beforeEach(() => {
+      const map = [
+        [1, 1, 1, 1, 1],
+        [1, 2, 2, 2, 1],
+        [1, 2, 2, 2, 1],
+        [1, 2, 2, 2, 1],
+        [1, 1, 1, 1, 1],
+      ];
+      const { dispatch } = setupStore();
+      dispatch(setupMap(map));
+    });
+
+    afterEach(() => {
+      const { result: cargo } = renderHook(() => useCargo(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      act(() => cargo.current.cleanCargos());
+    });
+
+    it("should move the cargo to left", () => {
+      const { result: cargo } = renderHook(() => useCargo(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      const { result: player } = renderHook(() => usePlayer(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 2, y: 1 })));
+
+      act(() => player.current.resetPlayerPosition({ x: 3, y: 1 }));
+      act(() => player.current.movePlayerToLeft());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(1);
+      expect(store.getState().cargos.cargos[0].y).toBe(1);
+    });
+
+    it("should move the cargo to right", () => {
+      const { result: cargo } = renderHook(() => useCargo(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      const { result: player } = renderHook(() => usePlayer(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 2, y: 1 })));
+
+      act(() => player.current.resetPlayerPosition({ x: 1, y: 1 }));
+      act(() => player.current.movePlayerToRight());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(3);
+      expect(store.getState().cargos.cargos[0].y).toBe(1);
+    });
+
+    it("should move the cargo to top", () => {
+      const { result: cargo } = renderHook(() => useCargo(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      const { result: player } = renderHook(() => usePlayer(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 2, y: 2 })));
+
+      act(() => player.current.resetPlayerPosition({ x: 2, y: 3 }));
+      act(() => player.current.movePlayerToTop());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(2);
+      expect(store.getState().cargos.cargos[0].y).toBe(1);
+    });
+
+    it("should move the cargo to down", () => {
+      const { result: cargo } = renderHook(() => useCargo(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      const { result: player } = renderHook(() => usePlayer(), {
+        wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
+      });
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 2, y: 2 })));
+
+      act(() => player.current.resetPlayerPosition({ x: 2, y: 1 }));
+      act(() => player.current.movePlayerToDown());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(2);
+      expect(store.getState().cargos.cargos[0].y).toBe(3);
     });
   });
 });

@@ -19,7 +19,7 @@ interface Position {
 }
 
 export function usePlayer() {
-  const { findCargo } = useCargo();
+  const { findCargo, moveCargoToLeft, moveCargoToRight, moveCargoToTop, moveCargoToDown } = useCargo();
   const player = useAppSelector(selectPlayer);
 
   const storeCollisionLeftWallOrAtEdgeLeftMap = useAppSelector(selectIsCollisionLeftWallOrAtEdgeLeftMap);
@@ -32,11 +32,24 @@ export function usePlayer() {
   function movePlayerToLeft() {
     if (storeCollisionLeftWallOrAtEdgeLeftMap) return;
 
+    const cargo = findCargo({ x: player.x - 1, y: player.y });
+    if (cargo) {
+      moveCargoToLeft(cargo);
+    }
+
     dispatch(moveToLeft());
   }
 
   function movePlayerToRight() {
     if (storeCollisionRightWallOrAtEdgeRightMap) return;
+    /* 1. 移动的时候看看有没有箱子
+       2. 如果有箱子，先移动箱子
+       3. 再移动玩家 */
+
+    const cargo = findCargo({ x: player.x + 1, y: player.y });
+    if (cargo) {
+      moveCargoToRight(cargo);
+    }
 
     dispatch(moveToRight());
   }
@@ -44,11 +57,20 @@ export function usePlayer() {
   function movePlayerToTop() {
     if (storeCollisionTopWallOrAtEdgeTopMap) return;
 
+    const cargo = findCargo({ x: player.x, y: player.y - 1 });
+    if (cargo) {
+      moveCargoToTop(cargo);
+    }
+
     dispatch(moveToTop());
   }
 
   function movePlayerToDown() {
     if (storeCollisionDownOrAtEdgeDownMap) return;
+    const cargo = findCargo({ x: player.x, y: player.y + 1 });
+    if (cargo) {
+      moveCargoToDown(cargo);
+    }
 
     dispatch(moveToDown());
   }
@@ -78,8 +100,6 @@ export function usePlayer() {
       x: player.x + 1,
       y: player.y,
     };
-
-    /* 移动的时候看看有没有箱子 */
 
     dispatch(collisionRightWallOrAtEdgeRightMap(position));
   }, [player.x, player.y, dispatch]);
