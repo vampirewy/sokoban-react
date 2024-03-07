@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import store from "../../store";
 import { setupMap } from "../Map";
-import setupStore from "@/tests/helper/setupStore";
+import { setupStore } from "@/tests/helper";
 
 describe("map store", () => {
   it("should setup the map", () => {

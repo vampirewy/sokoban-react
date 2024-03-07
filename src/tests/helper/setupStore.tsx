@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/store/useHooks";
 
 let dispatch: any;
 
-function setupStore() {
+export function setupStore() {
   const { result } = renderHook(() => useAppDispatch(), {
     wrapper: ({ children }: { children: React.ReactNode }) => <Provider store={store}>{children}</Provider>,
   });
@@ -15,5 +15,3 @@ function setupStore() {
     dispatch,
   };
 }
-
-export default setupStore;
