@@ -9,7 +9,7 @@ export default function GameView() {
 
   useEffect(() => {
     addCargo(createCargo({ x: 3, y: 3 }));
-    addCargo(createCargo({ x: 2, y: 5 }));
+    addCargo(createCargo({ x: 3, y: 4 }));
   }, []);
 
   return (

@@ -2,10 +2,10 @@ import { useAppDispatch, useAppSelector } from "@/store/useHooks";
 import { moveDistance, resetPosition, selectPlayer } from "@/store/features/Player";
 import { useCargo } from "@/composables/game/useCargo";
 import {
-  collisionLeftWallOrAtEdgeLeftMap,
-  collisionDownWallOrAtEdgeDownMap,
-  collisionTopWallOrAtEdgeTopMap,
-  collisionRightWallOrAtEdgeRightMap,
+  storeCollisionDownWallOrAtEdgeDownMap,
+  storeCollisionLeftWallOrAtEdgeLeftMap,
+  storeCollisionRightWallOrAtEdgeRightMap,
+  storeCollisionTopWallOrAtEdgeTopMap,
   selectIsCollisionLeftWallOrAtEdgeLeftMap,
   selectIsCollisionTheRightWallOrAtEdgeRightMap,
   selectIsCollisionTheDownWallOrAtEdgeDownMap,
@@ -20,56 +20,61 @@ interface Position {
 
 export function usePlayer() {
   const { findCargo, moveCargoToLeft, moveCargoToRight, moveCargoToTop, moveCargoToDown } = useCargo();
-  const player = useAppSelector(selectPlayer);
+  const storePlayer = useAppSelector(selectPlayer);
 
-  const storeCollisionLeftWallOrAtEdgeLeftMap = useAppSelector(selectIsCollisionLeftWallOrAtEdgeLeftMap);
-  const storeCollisionRightWallOrAtEdgeRightMap = useAppSelector(selectIsCollisionTheRightWallOrAtEdgeRightMap);
-  const storeCollisionTopWallOrAtEdgeTopMap = useAppSelector(selectIsCollisionTheTopWallOrAtEdgeTopMap);
-  const storeCollisionDownOrAtEdgeDownMap = useAppSelector(selectIsCollisionTheDownWallOrAtEdgeDownMap);
+  const storeCollisionWallOrEdgeMapLeft = useAppSelector(selectIsCollisionLeftWallOrAtEdgeLeftMap);
+  const storeCollisionWallOrEdgeMapRight = useAppSelector(selectIsCollisionTheRightWallOrAtEdgeRightMap);
+  const storeCollisionWallOrEdgeMapTop = useAppSelector(selectIsCollisionTheTopWallOrAtEdgeTopMap);
+  const storeCollisionWallOrEdgeMapDown = useAppSelector(selectIsCollisionTheDownWallOrAtEdgeDownMap);
 
   const dispatch = useAppDispatch();
 
   function movePlayerToLeft() {
-    if (storeCollisionLeftWallOrAtEdgeLeftMap) return;
+    if (storeCollisionWallOrEdgeMapLeft) return;
 
-    const cargo = findCargo({ x: player.x - 1, y: player.y });
+    const cargo = findCargo({ x: storePlayer.x - 1, y: storePlayer.y });
+
     if (cargo) {
-      moveCargoToLeft(cargo);
-    }
+      const isMoveCargo = moveCargoToLeft(cargo);
 
+      if (isMoveCargo) return;
+    }
     dispatch(moveDistance({ x: -1, y: 0 }));
   }
 
   function movePlayerToRight() {
-    if (storeCollisionRightWallOrAtEdgeRightMap) return;
+    if (storeCollisionWallOrEdgeMapRight) return;
     /* 1. 移动的时候看看有没有箱子
        2. 如果有箱子，先移动箱子
        3. 再移动玩家 */
 
-    const cargo = findCargo({ x: player.x + 1, y: player.y });
+    const cargo = findCargo({ x: storePlayer.x + 1, y: storePlayer.y });
     if (cargo) {
-      moveCargoToRight(cargo);
+      const isMoveCargo = moveCargoToRight(cargo);
+      if (isMoveCargo) return;
     }
 
     dispatch(moveDistance({ x: 1, y: 0 }));
   }
 
   function movePlayerToTop() {
-    if (storeCollisionTopWallOrAtEdgeTopMap) return;
+    if (storeCollisionWallOrEdgeMapTop) return;
 
-    const cargo = findCargo({ x: player.x, y: player.y - 1 });
+    const cargo = findCargo({ x: storePlayer.x, y: storePlayer.y - 1 });
     if (cargo) {
-      moveCargoToTop(cargo);
+      const isMoveCargo = moveCargoToTop(cargo);
+      if (isMoveCargo) return;
     }
 
     dispatch(moveDistance({ x: 0, y: -1 }));
   }
 
   function movePlayerToDown() {
-    if (storeCollisionDownOrAtEdgeDownMap) return;
-    const cargo = findCargo({ x: player.x, y: player.y + 1 });
+    if (storeCollisionWallOrEdgeMapDown) return;
+    const cargo = findCargo({ x: storePlayer.x, y: storePlayer.y + 1 });
     if (cargo) {
-      moveCargoToDown(cargo);
+      const isMoveCargo = moveCargoToDown(cargo);
+      if (isMoveCargo) return;
     }
 
     dispatch(moveDistance({ x: 0, y: 1 }));
@@ -88,42 +93,42 @@ export function usePlayer() {
      玩家才不会移动到墙里面
      */
     const position = {
-      x: player.x - 1,
-      y: player.y,
+      x: storePlayer.x - 1,
+      y: storePlayer.y,
     };
 
-    dispatch(collisionLeftWallOrAtEdgeLeftMap(position));
-  }, [player.x, player.y, dispatch]);
+    dispatch(storeCollisionLeftWallOrAtEdgeLeftMap(position));
+  }, [storePlayer.x, storePlayer.y, dispatch]);
 
   useEffect(() => {
     const position = {
-      x: player.x + 1,
-      y: player.y,
+      x: storePlayer.x + 1,
+      y: storePlayer.y,
     };
 
-    dispatch(collisionRightWallOrAtEdgeRightMap(position));
-  }, [player.x, player.y, dispatch]);
+    dispatch(storeCollisionRightWallOrAtEdgeRightMap(position));
+  }, [storePlayer.x, storePlayer.y, dispatch]);
 
   useEffect(() => {
     const position = {
-      x: player.x,
-      y: player.y - 1,
+      x: storePlayer.x,
+      y: storePlayer.y - 1,
     };
 
-    dispatch(collisionTopWallOrAtEdgeTopMap(position));
-  }, [player.x, player.y, dispatch]);
+    dispatch(storeCollisionTopWallOrAtEdgeTopMap(position));
+  }, [storePlayer.x, storePlayer.y, dispatch]);
 
   useEffect(() => {
     const position = {
-      x: player.x,
-      y: player.y + 1,
+      x: storePlayer.x,
+      y: storePlayer.y + 1,
     };
 
-    dispatch(collisionDownWallOrAtEdgeDownMap(position));
-  }, [player.x, player.y, dispatch]);
+    dispatch(storeCollisionDownWallOrAtEdgeDownMap(position));
+  }, [storePlayer.x, storePlayer.y, dispatch]);
 
   return {
-    player,
+    player: storePlayer,
     movePlayerToLeft,
     movePlayerToRight,
     movePlayerToTop,

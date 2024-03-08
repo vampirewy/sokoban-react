@@ -43,28 +43,28 @@ const MapReducer = createSlice({
   name: "map",
   initialState,
   reducers: {
-    setupMap: (state, action: PayloadAction<Map>) => {
+    storeSetupMap: (state, action: PayloadAction<Map>) => {
       state.map = action.payload;
     },
-    collisionLeftWallOrAtEdgeLeftMap: (state, action: PayloadAction<Position>) => {
+    storeCollisionLeftWallOrAtEdgeLeftMap: (state, action: PayloadAction<Position>) => {
       const MAP_MINI_LENGTH = 0;
 
       if (action.payload.x < MAP_MINI_LENGTH) state.isCollisionTheLeftWallOrAtEdgeMap = true;
       else state.isCollisionTheLeftWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionRightWallOrAtEdgeRightMap: (state, action: PayloadAction<Position>) => {
+    storeCollisionRightWallOrAtEdgeRightMap: (state, action: PayloadAction<Position>) => {
       const MAP_ROW_LENGTH = state.map[0].length - 1;
 
       if (action.payload.x > MAP_ROW_LENGTH) state.isCollisionTheRightWallOrAtEdgeMap = true;
       else state.isCollisionTheRightWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionTopWallOrAtEdgeTopMap: (state, action: PayloadAction<Position>) => {
+    storeCollisionTopWallOrAtEdgeTopMap: (state, action: PayloadAction<Position>) => {
       const MAP_MINI_LENGTH = 0;
 
       if (action.payload.y < MAP_MINI_LENGTH) state.isCollisionTheTopWallOrAtEdgeMap = true;
       else state.isCollisionTheTopWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionDownWallOrAtEdgeDownMap: (state, action: PayloadAction<Position>) => {
+    storeCollisionDownWallOrAtEdgeDownMap: (state, action: PayloadAction<Position>) => {
       const MAP_COL_LENGTH = state.map.length - 1;
 
       if (action.payload.y > MAP_COL_LENGTH) state.isCollisionTheDownWallOrAtEdgeMap = true;
@@ -92,11 +92,11 @@ export const selectIsCollisionTheDownWallOrAtEdgeDownMap = (state: RootState) =>
   state.map.isCollisionTheDownWallOrAtEdgeMap;
 
 export const {
-  setupMap,
-  collisionLeftWallOrAtEdgeLeftMap,
-  collisionRightWallOrAtEdgeRightMap,
-  collisionTopWallOrAtEdgeTopMap,
-  collisionDownWallOrAtEdgeDownMap,
+  storeSetupMap,
+  storeCollisionLeftWallOrAtEdgeLeftMap,
+  storeCollisionRightWallOrAtEdgeRightMap,
+  storeCollisionTopWallOrAtEdgeTopMap,
+  storeCollisionDownWallOrAtEdgeDownMap,
 } = MapReducer.actions;
 
 export default MapReducer.reducer;

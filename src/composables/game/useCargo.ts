@@ -41,20 +41,57 @@ export function useCargo() {
     return storeCargos.find((cargo) => cargo.x === position.x && cargo.y === position.y);
   }
 
-  function moveCargoToRight(cargo: Cargo) {
-    dispatch(storeMoveCargoToRight(cargo));
+  function moveCargoToRight(c: Cargo) {
+    const position = {
+      x: c.x + 1,
+      y: c.y,
+    };
+
+    const cargo = findCargo(position);
+
+    if (cargo) return true;
+
+    dispatch(storeMoveCargoToRight(c));
+    return false;
   }
 
-  function moveCargoToLeft(cargo: Cargo) {
-    dispatch(storeMoveCargoToLeft(cargo));
+  function moveCargoToLeft(c: Cargo) {
+    const position = {
+      x: c.x - 1,
+      y: c.y,
+    };
+
+    const cargo = findCargo(position);
+
+    if (cargo) return true;
+
+    dispatch(storeMoveCargoToLeft(c));
+    return false;
   }
 
-  function moveCargoToTop(cargo: Cargo) {
-    dispatch(storeMoveCargoToTop(cargo));
+  function moveCargoToTop(c: Cargo) {
+    const position = {
+      x: c.x,
+      y: c.y - 1,
+    };
+
+    const cargo = findCargo(position);
+    if (cargo) return true;
+
+    dispatch(storeMoveCargoToTop(c));
+    return false;
   }
 
-  function moveCargoToDown(cargo: Cargo) {
-    dispatch(storeMoveCargoToDown(cargo));
+  function moveCargoToDown(c: Cargo) {
+    const position = {
+      x: c.x,
+      y: c.y + 1,
+    };
+    const cargo = findCargo(position);
+    if (cargo) return true;
+
+    dispatch(storeMoveCargoToDown(c));
+    return false;
   }
 
   function cleanCargos() {

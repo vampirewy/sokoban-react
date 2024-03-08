@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import store from "../../store";
-import { setupMap } from "../Map";
+import { storeSetupMap } from "../Map";
 import { setupStore } from "@/tests/helper";
 
 describe("map store", () => {
@@ -12,7 +12,7 @@ describe("map store", () => {
     ];
     const { dispatch } = setupStore();
 
-    dispatch(setupMap(initMap));
+    dispatch(storeSetupMap(initMap));
 
     expect(store.getState().map.map).toMatchInlineSnapshot(`
       [

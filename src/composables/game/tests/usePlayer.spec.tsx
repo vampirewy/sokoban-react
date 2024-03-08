@@ -2,7 +2,7 @@ import { beforeEach, describe, it, expect, afterEach } from "vitest";
 import { act } from "@testing-library/react";
 import store from "@/store/store";
 import { setupHooks, setupStore } from "@/tests/helper";
-import { setupMap } from "@/store/features/Map";
+import { storeSetupMap } from "@/store/features/Map";
 import { usePlayer } from "../usePlayer";
 import { useCargo } from "../useCargo";
 
@@ -15,7 +15,7 @@ describe("usePlayer", () => {
         [2, 2, 2],
       ];
       const { dispatch } = setupStore();
-      dispatch(setupMap(map));
+      dispatch(storeSetupMap(map));
     });
 
     it("should move to left", () => {
@@ -73,7 +73,7 @@ describe("usePlayer", () => {
         [2, 2, 2],
       ];
       const { dispatch } = setupStore();
-      dispatch(setupMap(map));
+      dispatch(storeSetupMap(map));
     });
 
     it("should not move to left when the player is already at the left edge of the map", () => {
@@ -128,7 +128,7 @@ describe("usePlayer", () => {
       ];
       const { dispatch } = setupStore();
 
-      dispatch(setupMap(map));
+      dispatch(storeSetupMap(map));
     });
 
     it("should not move to left when collision is wall", () => {
@@ -182,7 +182,7 @@ describe("usePlayer", () => {
         [1, 1, 1, 1, 1],
       ];
       const { dispatch } = setupStore();
-      dispatch(setupMap(map));
+      dispatch(storeSetupMap(map));
     });
 
     afterEach(() => {
@@ -252,6 +252,86 @@ describe("usePlayer", () => {
 
       expect(store.getState().cargos.cargos[0].x).toBe(cargoPosition.x);
       expect(store.getState().cargos.cargos[0].y).toBe(cargoPosition.y + 1);
+    });
+
+    it("should not move the cargo to left when the cargo hits another cargo", () => {
+      const cargoPosition = { x: 2, y: 1 };
+      const anotherCargoPosition = { x: 1, y: 1 };
+      const playerPosition = { x: 3, y: 1 };
+
+      const { result: cargo } = setupHooks(useCargo, true);
+      const { result: player } = setupHooks(usePlayer, true);
+      act(() => cargo.current.addCargo(cargo.current.createCargo(cargoPosition)));
+      act(() => cargo.current.addCargo(cargo.current.createCargo(anotherCargoPosition)));
+
+      act(() => player.current.resetPlayerPosition(playerPosition));
+      act(() => player.current.movePlayerToLeft());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(cargoPosition.x);
+      expect(store.getState().cargos.cargos[0].y).toBe(cargoPosition.y);
+      expect(store.getState().player.player.x).toBe(playerPosition.x);
+      expect(store.getState().player.player.y).toBe(playerPosition.y);
+    });
+
+    it("should not move the cargo to right when the cargo hits another cargo", () => {
+      const cargoPosition = { x: 2, y: 1 };
+      const anotherCargoPosition = { x: 3, y: 1 };
+      const playerPosition = { x: 1, y: 1 };
+
+      const { result: cargo } = setupHooks(useCargo, true);
+      const { result: player } = setupHooks(usePlayer, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo(cargoPosition)));
+      act(() => cargo.current.addCargo(cargo.current.createCargo(anotherCargoPosition)));
+
+      act(() => player.current.resetPlayerPosition(playerPosition));
+      act(() => player.current.movePlayerToRight());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(cargoPosition.x);
+      expect(store.getState().cargos.cargos[0].y).toBe(cargoPosition.y);
+      expect(store.getState().player.player.x).toBe(playerPosition.x);
+      expect(store.getState().player.player.y).toBe(playerPosition.y);
+    });
+
+    it("should not move the cargo to top when the cargo hits another cargo", () => {
+      const cargoPosition = { x: 2, y: 2 };
+      const anotherCargoPosition = { x: 2, y: 1 };
+
+      const playerPosition = { x: 2, y: 3 };
+
+      const { result: cargo } = setupHooks(useCargo, true);
+      const { result: player } = setupHooks(usePlayer, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo(cargoPosition)));
+      act(() => cargo.current.addCargo(cargo.current.createCargo(anotherCargoPosition)));
+
+      act(() => player.current.resetPlayerPosition(playerPosition));
+      act(() => player.current.movePlayerToTop());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(cargoPosition.x);
+      expect(store.getState().cargos.cargos[0].y).toBe(cargoPosition.y);
+      expect(store.getState().player.player.x).toBe(playerPosition.x);
+      expect(store.getState().player.player.y).toBe(playerPosition.y);
+    });
+
+    it("should not move the cargo to down when the cargo hits another cargo", () => {
+      const cargoPosition = { x: 2, y: 2 };
+      const anotherCargoPosition = { x: 2, y: 3 };
+      const playerPosition = { x: 2, y: 1 };
+
+      const { result: cargo } = setupHooks(useCargo, true);
+      const { result: player } = setupHooks(usePlayer, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo(cargoPosition)));
+      act(() => cargo.current.addCargo(cargo.current.createCargo(anotherCargoPosition)));
+
+      act(() => player.current.resetPlayerPosition(playerPosition));
+      act(() => player.current.movePlayerToDown());
+
+      expect(store.getState().cargos.cargos[0].x).toBe(cargoPosition.x);
+      expect(store.getState().cargos.cargos[0].y).toBe(cargoPosition.y);
+      expect(store.getState().player.player.x).toBe(playerPosition.x);
+      expect(store.getState().player.player.y).toBe(playerPosition.y);
     });
   });
 });
