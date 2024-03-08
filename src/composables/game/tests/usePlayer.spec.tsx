@@ -65,7 +65,7 @@ describe("usePlayer", () => {
     });
   });
 
-  describe("out of map", () => {
+  describe("at the edge of map", () => {
     beforeEach(() => {
       const map = [
         [2, 2, 2],

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import store from "../../store";
 import { setupStore } from "@/tests/helper";
 import { setupMap } from "../Map";
-import { moveToDown, moveToLeft, moveToRight, moveToTop, resetPosition } from "../Player";
+import { moveDistance, resetPosition } from "../Player";
 
 describe("player store", () => {
   describe("normal move", () => {
@@ -22,7 +22,7 @@ describe("player store", () => {
       const { dispatch } = setupStore();
 
       dispatch(resetPosition(position));
-      dispatch(moveToLeft());
+      dispatch(moveDistance({ x: -1, y: 0 }));
 
       expect(store.getState().player.player.x).toBe(position.x - 1);
       expect(store.getState().player.player.y).toBe(position.y);
@@ -34,7 +34,7 @@ describe("player store", () => {
       const { dispatch } = setupStore();
 
       dispatch(resetPosition(position));
-      dispatch(moveToRight());
+      dispatch(moveDistance({ x: 1, y: 0 }));
 
       expect(store.getState().player.player.x).toBe(position.x + 1);
       expect(store.getState().player.player.y).toBe(position.y);
@@ -46,7 +46,7 @@ describe("player store", () => {
       const { dispatch } = setupStore();
 
       dispatch(resetPosition(position));
-      dispatch(moveToTop());
+      dispatch(moveDistance({ x: 0, y: -1 }));
 
       expect(store.getState().player.player.x).toBe(position.x);
       expect(store.getState().player.player.y).toBe(position.y - 1);
@@ -58,7 +58,7 @@ describe("player store", () => {
       const { dispatch } = setupStore();
 
       dispatch(resetPosition(position));
-      dispatch(moveToDown());
+      dispatch(moveDistance({ x: 0, y: 1 }));
 
       expect(store.getState().player.player.x).toBe(position.x);
       expect(store.getState().player.player.y).toBe(position.y + 1);

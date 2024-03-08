@@ -46,20 +46,28 @@ const MapReducer = createSlice({
     setupMap: (state, action: PayloadAction<Map>) => {
       state.map = action.payload;
     },
-    collisionLeftWallOrAtEdgeLeftMap: (state, action: PayloadAction<{ x: number; y: number }>) => {
-      if (action.payload.x < 0) state.isCollisionTheLeftWallOrAtEdgeMap = true;
+    collisionLeftWallOrAtEdgeLeftMap: (state, action: PayloadAction<Position>) => {
+      const MAP_MINI_LENGTH = 0;
+
+      if (action.payload.x < MAP_MINI_LENGTH) state.isCollisionTheLeftWallOrAtEdgeMap = true;
       else state.isCollisionTheLeftWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionRightWallOrAtEdgeRightMap: (state, action: PayloadAction<{ x: number; y: number }>) => {
-      if (action.payload.x > state.map[0].length - 1) state.isCollisionTheRightWallOrAtEdgeMap = true;
+    collisionRightWallOrAtEdgeRightMap: (state, action: PayloadAction<Position>) => {
+      const MAP_ROW_LENGTH = state.map[0].length - 1;
+
+      if (action.payload.x > MAP_ROW_LENGTH) state.isCollisionTheRightWallOrAtEdgeMap = true;
       else state.isCollisionTheRightWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionTopWallOrAtEdgeTopMap: (state, action: PayloadAction<{ x: number; y: number }>) => {
-      if (action.payload.y < 0) state.isCollisionTheTopWallOrAtEdgeMap = true;
+    collisionTopWallOrAtEdgeTopMap: (state, action: PayloadAction<Position>) => {
+      const MAP_MINI_LENGTH = 0;
+
+      if (action.payload.y < MAP_MINI_LENGTH) state.isCollisionTheTopWallOrAtEdgeMap = true;
       else state.isCollisionTheTopWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
-    collisionDownWallOrAtEdgeDownMap: (state, action: PayloadAction<{ x: number; y: number }>) => {
-      if (action.payload.y > state.map.length - 1) state.isCollisionTheDownWallOrAtEdgeMap = true;
+    collisionDownWallOrAtEdgeDownMap: (state, action: PayloadAction<Position>) => {
+      const MAP_COL_LENGTH = state.map.length - 1;
+
+      if (action.payload.y > MAP_COL_LENGTH) state.isCollisionTheDownWallOrAtEdgeMap = true;
       else state.isCollisionTheDownWallOrAtEdgeMap = isWall(state.map, action.payload);
     },
   },

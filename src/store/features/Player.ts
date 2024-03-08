@@ -19,17 +19,9 @@ const PlayerReducer = createSlice({
   name: "player",
   initialState,
   reducers: {
-    moveToRight: (state) => {
-      state.player.x += 1;
-    },
-    moveToLeft: (state) => {
-      state.player.x -= 1;
-    },
-    moveToTop: (state) => {
-      state.player.y -= 1;
-    },
-    moveToDown: (state) => {
-      state.player.y += 1;
+    moveDistance: (state, action: PayloadAction<{ x: number; y: number }>) => {
+      state.player.x += action.payload.x;
+      state.player.y += action.payload.y;
     },
     resetPosition: (state, action: PayloadAction<Player>) => {
       state.player = action.payload;
@@ -39,5 +31,5 @@ const PlayerReducer = createSlice({
 
 export const selectPlayer = (state: RootState): Player => state.player.player;
 
-export const { moveToDown, moveToLeft, moveToRight, moveToTop, resetPosition } = PlayerReducer.actions;
+export const { moveDistance, resetPosition } = PlayerReducer.actions;
 export default PlayerReducer.reducer;

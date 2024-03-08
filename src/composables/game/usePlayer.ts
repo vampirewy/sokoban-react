@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { resetPosition, moveToDown, moveToLeft, moveToRight, moveToTop, selectPlayer } from "@/store/features/Player";
+import { moveDistance, resetPosition, selectPlayer } from "@/store/features/Player";
 import { useCargo } from "@/composables/game/useCargo";
 import {
   collisionLeftWallOrAtEdgeLeftMap,
@@ -37,7 +37,7 @@ export function usePlayer() {
       moveCargoToLeft(cargo);
     }
 
-    dispatch(moveToLeft());
+    dispatch(moveDistance({ x: -1, y: 0 }));
   }
 
   function movePlayerToRight() {
@@ -51,7 +51,7 @@ export function usePlayer() {
       moveCargoToRight(cargo);
     }
 
-    dispatch(moveToRight());
+    dispatch(moveDistance({ x: 1, y: 0 }));
   }
 
   function movePlayerToTop() {
@@ -62,7 +62,7 @@ export function usePlayer() {
       moveCargoToTop(cargo);
     }
 
-    dispatch(moveToTop());
+    dispatch(moveDistance({ x: 0, y: -1 }));
   }
 
   function movePlayerToDown() {
@@ -72,7 +72,7 @@ export function usePlayer() {
       moveCargoToDown(cargo);
     }
 
-    dispatch(moveToDown());
+    dispatch(moveDistance({ x: 0, y: 1 }));
   }
 
   function resetPlayerPosition(position: Position) {
