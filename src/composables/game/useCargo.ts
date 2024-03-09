@@ -1,13 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import {
-  storeAddCargos,
-  selectCargos,
-  storeCleanCargos,
-  storeMoveCargoToRight,
-  storeMoveCargoToLeft,
-  storeMoveCargoToTop,
-  storeMoveCargoToDown,
-} from "@/store/features/Cargos";
+import { storeAddCargos, selectCargos, storeMoveCargo, storeCleanCargos } from "@/store/features/Cargos";
 
 export interface Cargo {
   x: number;
@@ -41,56 +33,48 @@ export function useCargo() {
     return storeCargos.find((cargo) => cargo.x === position.x && cargo.y === position.y);
   }
 
-  function moveCargoToRight(c: Cargo) {
+  function _move(c: Cargo, dx: number, dy: number) {
     const position = {
-      x: c.x + 1,
-      y: c.y,
+      x: c.x + dx,
+      y: c.y + dy,
     };
 
     const cargo = findCargo(position);
-
     if (cargo) return true;
 
-    dispatch(storeMoveCargoToRight(c));
+    dispatch(storeMoveCargo({ cargo: c, dx, dy }));
+    return false;
+  }
+
+  function moveCargoToRight(c: Cargo) {
+    const isMoveCargo = _move(c, 1, 0);
+
+    if (isMoveCargo) return true;
+
     return false;
   }
 
   function moveCargoToLeft(c: Cargo) {
-    const position = {
-      x: c.x - 1,
-      y: c.y,
-    };
+    const isMoveCargo = _move(c, -1, 0);
 
-    const cargo = findCargo(position);
+    if (isMoveCargo) return true;
 
-    if (cargo) return true;
-
-    dispatch(storeMoveCargoToLeft(c));
     return false;
   }
 
   function moveCargoToTop(c: Cargo) {
-    const position = {
-      x: c.x,
-      y: c.y - 1,
-    };
+    const isMoveCargo = _move(c, 0, -1);
 
-    const cargo = findCargo(position);
-    if (cargo) return true;
+    if (isMoveCargo) return true;
 
-    dispatch(storeMoveCargoToTop(c));
     return false;
   }
 
   function moveCargoToDown(c: Cargo) {
-    const position = {
-      x: c.x,
-      y: c.y + 1,
-    };
-    const cargo = findCargo(position);
-    if (cargo) return true;
+    const isMoveCargo = _move(c, 0, 1);
 
-    dispatch(storeMoveCargoToDown(c));
+    if (isMoveCargo) return true;
+
     return false;
   }
 

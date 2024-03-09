@@ -22,17 +22,8 @@ const CargosReducer = createSlice({
     storeAddCargos: (state, action: PayloadAction<Cargo>) => {
       state.cargos.push(action.payload);
     },
-    storeMoveCargoToLeft: (state, action: PayloadAction<Cargo>) => {
-      state.cargos = updateCargos(state.cargos, { ...action.payload, x: action.payload.x - 1 });
-    },
-    storeMoveCargoToRight: (state, action: PayloadAction<Cargo>) => {
-      state.cargos = updateCargos(state.cargos, { ...action.payload, x: action.payload.x + 1 });
-    },
-    storeMoveCargoToTop: (state, action: PayloadAction<Cargo>) => {
-      state.cargos = updateCargos(state.cargos, { ...action.payload, y: action.payload.y - 1 });
-    },
-    storeMoveCargoToDown: (state, action: PayloadAction<Cargo>) => {
-      state.cargos = updateCargos(state.cargos, { ...action.payload, y: action.payload.y + 1 });
+    storeMoveCargo: (state, action: PayloadAction<{ cargo: Cargo; dx: number; dy: number }>) => {
+      state.cargos = updateCargos(state.cargos, action.payload);
     },
     storeCleanCargos: (state) => {
       state.cargos = [];
@@ -40,24 +31,21 @@ const CargosReducer = createSlice({
   },
 });
 
-function updateCargos(cargos: Cargo[], c: Cargo) {
-  return cargos.map((cargo) => {
-    if (cargo.id === c.id) {
-      return c;
+function updateCargos(cargos: Cargo[], { cargo, dx, dy }: { cargo: Cargo; dx: number; dy: number }) {
+  return cargos.map((c) => {
+    if (c.id === cargo.id) {
+      return {
+        ...c,
+        x: c.x + dx,
+        y: c.y + dy,
+      };
     }
-    return cargo;
+    return c;
   });
 }
 
 export const selectCargos = (state: RootState) => state.cargos.cargos;
 
-export const {
-  storeAddCargos,
-  storeCleanCargos,
-  storeMoveCargoToLeft,
-  storeMoveCargoToRight,
-  storeMoveCargoToTop,
-  storeMoveCargoToDown,
-} = CargosReducer.actions;
+export const { storeAddCargos, storeMoveCargo, storeCleanCargos } = CargosReducer.actions;
 
 export default CargosReducer.reducer;
