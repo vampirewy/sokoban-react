@@ -41,6 +41,8 @@ export function useCargo() {
       y: c.y + dy,
     };
 
+    // 箱子越界还没写
+
     if (isWall(position)) return true;
 
     const cargo = findCargo(position);
