@@ -1,5 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/useHooks";
 import { storeAddCargos, selectCargos, storeMoveCargo, storeCleanCargos } from "@/store/features/Cargos";
+import { useMap } from "@/composables/game/useMap";
+import { generateId } from "@/game/gameData";
 
 export interface Cargo {
   x: number;
@@ -11,9 +13,9 @@ export interface Position {
   y: number;
 }
 
-let id = 0;
-
 export function useCargo() {
+  const { isWall } = useMap();
+
   const storeCargos = useAppSelector(selectCargos);
   const dispatch = useAppDispatch();
 
@@ -25,7 +27,7 @@ export function useCargo() {
     return {
       x: position.x,
       y: position.y,
-      id: id++,
+      id: generateId(),
     };
   }
 
@@ -38,6 +40,8 @@ export function useCargo() {
       x: c.x + dx,
       y: c.y + dy,
     };
+
+    if (isWall(position)) return true;
 
     const cargo = findCargo(position);
     if (cargo) return true;

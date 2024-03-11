@@ -51,6 +51,7 @@ export function usePlayer() {
     const cargo = findCargo({ x: storePlayer.x + 1, y: storePlayer.y });
     if (cargo) {
       const isMoveCargo = moveCargoToRight(cargo);
+
       if (isMoveCargo) return;
     }
 
@@ -63,6 +64,7 @@ export function usePlayer() {
     const cargo = findCargo({ x: storePlayer.x, y: storePlayer.y - 1 });
     if (cargo) {
       const isMoveCargo = moveCargoToTop(cargo);
+
       if (isMoveCargo) return;
     }
 
@@ -71,9 +73,11 @@ export function usePlayer() {
 
   function movePlayerToDown() {
     if (storeCollisionWallOrEdgeMapDown) return;
+
     const cargo = findCargo({ x: storePlayer.x, y: storePlayer.y + 1 });
     if (cargo) {
       const isMoveCargo = moveCargoToDown(cargo);
+
       if (isMoveCargo) return;
     }
 

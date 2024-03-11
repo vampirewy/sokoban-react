@@ -27,7 +27,7 @@ describe("usePlayer", () => {
       act(() => player.current.movePlayerToLeft());
 
       expect(player.current.player.x).toBe(position.x - 1);
-      expect(player.current.player.y).toBe(1);
+      expect(player.current.player.y).toBe(position.y);
     });
 
     it("should move to right", () => {
