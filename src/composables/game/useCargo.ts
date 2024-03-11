@@ -1,20 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { storeAddCargos, selectCargos, storeMoveCargo, storeCleanCargos } from "@/store/features/Cargos";
+import { storeAddCargos, selectCargos, storeMoveCargo, storeCleanCargos, type Cargo } from "@/store/features/Cargos";
 import { useMap } from "@/composables/game/useMap";
+import { useTarget } from "./useTarget";
 import { generateId } from "@/game/gameData";
-
-export interface Cargo {
-  x: number;
-  y: number;
-  id: number;
-}
-export interface Position {
-  x: number;
-  y: number;
-}
+import { type Position } from "./usePosition";
 
 export function useCargo() {
   const { isWall } = useMap();
+  const { findTarget } = useTarget();
 
   const storeCargos = useAppSelector(selectCargos);
   const dispatch = useAppDispatch();
@@ -28,6 +21,7 @@ export function useCargo() {
       x: position.x,
       y: position.y,
       id: generateId(),
+      isTarget: false,
     };
   }
 
@@ -41,47 +35,32 @@ export function useCargo() {
       y: c.y + dy,
     };
 
-    // 箱子越界还没写
+    // TODO: 箱子越界 Map 还没写
 
     if (isWall(position)) return true;
 
     const cargo = findCargo(position);
     if (cargo) return true;
 
-    dispatch(storeMoveCargo({ cargo: c, dx, dy }));
+    const isTarget = detectionTarget(position);
+
+    dispatch(storeMoveCargo({ cargo: c, dx, dy, isTarget }));
     return false;
   }
 
-  function moveCargoToRight(c: Cargo) {
-    const isMoveCargo = _move(c, 1, 0);
+  function moveCargo(position: Position, dx: number, dy: number) {
+    const cargo = findCargo(position);
 
-    if (isMoveCargo) return true;
-
-    return false;
-  }
-
-  function moveCargoToLeft(c: Cargo) {
-    const isMoveCargo = _move(c, -1, 0);
-
-    if (isMoveCargo) return true;
+    if (cargo) {
+      const isMoveCargo = _move(cargo, dx, dy);
+      return !!isMoveCargo;
+    }
 
     return false;
   }
 
-  function moveCargoToTop(c: Cargo) {
-    const isMoveCargo = _move(c, 0, -1);
-
-    if (isMoveCargo) return true;
-
-    return false;
-  }
-
-  function moveCargoToDown(c: Cargo) {
-    const isMoveCargo = _move(c, 0, 1);
-
-    if (isMoveCargo) return true;
-
-    return false;
+  function detectionTarget(position: Position) {
+    return !!findTarget(position);
   }
 
   function cleanCargos() {
@@ -93,10 +72,8 @@ export function useCargo() {
     addCargo,
     createCargo,
     findCargo,
-    moveCargoToRight,
-    moveCargoToLeft,
-    moveCargoToTop,
-    moveCargoToDown,
+    moveCargo,
+    detectionTarget,
     cleanCargos,
   };
 }

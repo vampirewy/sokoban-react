@@ -5,6 +5,7 @@ export interface Cargo {
   x: number;
   y: number;
   id: number;
+  isTarget: boolean;
 }
 
 interface CargosState {
@@ -22,7 +23,7 @@ const CargosReducer = createSlice({
     storeAddCargos: (state, action: PayloadAction<Cargo>) => {
       state.cargos.push(action.payload);
     },
-    storeMoveCargo: (state, action: PayloadAction<{ cargo: Cargo; dx: number; dy: number }>) => {
+    storeMoveCargo: (state, action: PayloadAction<{ cargo: Cargo; dx: number; dy: number; isTarget: boolean }>) => {
       state.cargos = updateCargos(state.cargos, action.payload);
     },
     storeCleanCargos: (state) => {
@@ -31,13 +32,17 @@ const CargosReducer = createSlice({
   },
 });
 
-function updateCargos(cargos: Cargo[], { cargo, dx, dy }: { cargo: Cargo; dx: number; dy: number }) {
+function updateCargos(
+  cargos: Cargo[],
+  { cargo, dx, dy, isTarget }: { cargo: Cargo; dx: number; dy: number; isTarget: boolean }
+) {
   return cargos.map((c) => {
     if (c.id === cargo.id) {
       return {
         ...c,
         x: c.x + dx,
         y: c.y + dy,
+        isTarget,
       };
     }
     return c;

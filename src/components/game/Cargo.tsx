@@ -1,4 +1,5 @@
 import cargoImg from "@/assets/cargo.png";
+import cargoActiveImg from "@/assets/cargo_on_target.png";
 import { usePosition } from "@/composables/game/usePosition";
 import { type Cargo } from "@/store/features/Cargos";
 
@@ -11,7 +12,7 @@ export default function Cargo({ cargo }: PropsType) {
 
   return (
     <div className="absolute" style={position}>
-      <img src={cargoImg} alt="" />
+      <img src={cargo.isTarget ? cargoActiveImg : cargoImg} alt="" />
     </div>
   );
 }
