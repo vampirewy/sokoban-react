@@ -64,7 +64,7 @@ const secondGameData: LevelGameData = {
   ],
   cargos: [
     {
-      x: 2,
+      x: 3,
       y: 2,
     },
     {

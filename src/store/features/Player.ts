@@ -12,7 +12,7 @@ export interface PlayerState {
 }
 
 const initialState: PlayerState = {
-  player: { x: 1, y: 1 },
+  player: { x: 0, y: 0 },
 };
 
 const PlayerReducer = createSlice({

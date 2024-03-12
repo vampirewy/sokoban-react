@@ -10,7 +10,7 @@ import { useGame } from "@/composables/game/useGame";
 import { gameData } from "@/game/gameData";
 
 export default function GameView() {
-  const { setupGame } = useGame();
+  const { setupGame, gameStatus, toNextLevel, detectGameCompleted } = useGame();
   const { storeCargos } = useCargo();
   const { storeTargets } = useTarget();
 
@@ -18,7 +18,13 @@ export default function GameView() {
     setupGame(gameData);
   }, []);
 
-  function handleClick() {}
+  function handleClick() {
+    toNextLevel();
+  }
+
+  useEffect(() => {
+    detectGameCompleted();
+  }, [storeCargos]);
 
   return (
     <>
@@ -35,9 +41,11 @@ export default function GameView() {
       <Player></Player>
 
       <div>
-        <div className=" bg-red-500" onClick={handleClick}>
-          下一关
-        </div>
+        {gameStatus.isGameCompleted && (
+          <div className=" bg-red-500" onClick={handleClick}>
+            下一关
+          </div>
+        )}
       </div>
     </>
   );
