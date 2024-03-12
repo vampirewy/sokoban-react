@@ -1,24 +1,24 @@
+import { useEffect } from "react";
+
 import Map from "@/components/game/Map";
 import Player from "@/components/game/Player";
 import Cargo from "@/components/game/Cargo";
 import Target from "@/components/game/Target";
 import { useCargo } from "@/composables/game/useCargo";
 import { useTarget } from "@/composables/game/useTarget";
-import { useEffect } from "react";
+import { useGame } from "@/composables/game/useGame";
+import { gameData } from "@/game/gameData";
 
 export default function GameView() {
-  const { storeCargos, addCargo, createCargo } = useCargo();
-  const { storeTargets, addTarget, createTarget } = useTarget();
+  const { setupGame } = useGame();
+  const { storeCargos } = useCargo();
+  const { storeTargets } = useTarget();
 
   useEffect(() => {
-    addCargo(createCargo({ x: 3, y: 3 }));
-    addCargo(createCargo({ x: 3, y: 4 }));
+    setupGame(gameData);
   }, []);
 
-  useEffect(() => {
-    addTarget(createTarget({ x: 2, y: 3 }));
-    addTarget(createTarget({ x: 2, y: 4 }));
-  }, []);
+  function handleClick() {}
 
   return (
     <>
@@ -33,6 +33,12 @@ export default function GameView() {
       ))}
 
       <Player></Player>
+
+      <div>
+        <div className=" bg-red-500" onClick={handleClick}>
+          下一关
+        </div>
+      </div>
     </>
   );
 }
