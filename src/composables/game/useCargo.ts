@@ -6,7 +6,7 @@ import { generateId } from "@/game/gameData";
 import { type Position } from "./usePosition";
 
 export function useCargo() {
-  const { isWall } = useMap();
+  const { isWall, detectEdgeOfMap } = useMap();
   const { findTarget } = useTarget();
 
   const storeCargos = useAppSelector(selectCargos);
@@ -35,7 +35,7 @@ export function useCargo() {
       y: c.y + dy,
     };
 
-    // TODO: 箱子越界 Map 还没写
+    if (detectEdgeOfMap(position)) return true;
 
     if (isWall(position)) return true;
 

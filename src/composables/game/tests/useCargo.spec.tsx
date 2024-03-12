@@ -8,6 +8,16 @@ import { storeSetupMap } from "@/store/features/Map";
 
 describe("use cargo", () => {
   beforeEach(() => {
+    const map = [
+      [1, 1, 1, 1, 1],
+      [1, 2, 2, 2, 1],
+      [1, 2, 2, 2, 1],
+      [1, 2, 2, 2, 1],
+      [1, 1, 1, 1, 1],
+    ];
+    const { dispatch } = setupStore();
+
+    dispatch(storeSetupMap(map));
     const { result: cargo } = setupHooks(useCargo, true);
 
     act(() => cargo.current.cleanCargos());
@@ -21,14 +31,14 @@ describe("use cargo", () => {
     expect(cargo.current.storeCargos.length).toBe(1);
   });
 
-  describe("push cargo", () => {
+  describe("at edge of the map", () => {
     beforeEach(() => {
       const map = [
-        [1, 1, 1, 1, 1],
+        [1, 2, 1, 1, 1],
+        [2, 2, 2, 2, 2],
         [1, 2, 2, 2, 1],
         [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1],
+        [1, 2, 1, 1, 1],
       ];
       const { dispatch } = setupStore();
       dispatch(storeSetupMap(map));
@@ -37,6 +47,48 @@ describe("use cargo", () => {
       act(() => cargo.current.cleanCargos());
     });
 
+    it("should not move the cargo to the left", () => {
+      const { result: cargo } = setupHooks(useCargo, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 0, y: 1 })));
+      act(() => cargo.current.moveCargo(cargo.current.storeCargos[0], -1, 0));
+
+      expect(store.getState().cargos.cargos[0].x).toBe(0);
+      expect(store.getState().cargos.cargos[0].y).toBe(1);
+    });
+
+    it("should not move the cargo to the right", () => {
+      const { result: cargo } = setupHooks(useCargo, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 4, y: 1 })));
+      act(() => cargo.current.moveCargo(cargo.current.storeCargos[0], 1, 0));
+
+      expect(store.getState().cargos.cargos[0].x).toBe(4);
+      expect(store.getState().cargos.cargos[0].y).toBe(1);
+    });
+
+    it("should not move the cargo to the top", () => {
+      const { result: cargo } = setupHooks(useCargo, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 1, y: 0 })));
+      act(() => cargo.current.moveCargo(cargo.current.storeCargos[0], 0, -1));
+
+      expect(store.getState().cargos.cargos[0].x).toBe(1);
+      expect(store.getState().cargos.cargos[0].y).toBe(0);
+    });
+
+    it("should not move the cargo to the down", () => {
+      const { result: cargo } = setupHooks(useCargo, true);
+
+      act(() => cargo.current.addCargo(cargo.current.createCargo({ x: 1, y: 4 })));
+      act(() => cargo.current.moveCargo(cargo.current.storeCargos[0], 0, 1));
+
+      expect(store.getState().cargos.cargos[0].x).toBe(1);
+      expect(store.getState().cargos.cargos[0].y).toBe(4);
+    });
+  });
+
+  describe("push cargo", () => {
     it("should move the cargo to left", () => {
       const cargoPosition = { x: 2, y: 1 };
 
@@ -90,19 +142,6 @@ describe("use cargo", () => {
   });
 
   describe("should not move cargo", () => {
-    beforeEach(() => {
-      const map = [
-        [1, 1, 1, 1, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1],
-      ];
-      const { dispatch } = setupStore();
-
-      dispatch(storeSetupMap(map));
-    });
-
     it("should not move cargo to left when collision wall", () => {
       const position = {
         x: 1,
@@ -218,19 +257,6 @@ describe("use cargo", () => {
   });
 
   describe("cargo in the target", () => {
-    beforeEach(() => {
-      const map = [
-        [1, 1, 1, 1, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1],
-      ];
-      const { dispatch } = setupStore();
-
-      dispatch(storeSetupMap(map));
-    });
-
     it("the cargo should be in the target", () => {
       const { result: cargo } = setupHooks(useCargo, true);
       const { result: target } = setupHooks(useTarget, true);

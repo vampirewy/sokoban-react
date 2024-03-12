@@ -4,18 +4,16 @@ import { setupHooks, setupStore } from "@/tests/helper";
 import { storeSetupMap } from "@/store/features/Map";
 import { usePlayer } from "../usePlayer";
 
+const map = [
+  [2, 2, 2],
+  [2, 2, 2],
+  [2, 2, 2],
+];
+const { dispatch } = setupStore();
+dispatch(storeSetupMap(map));
+
 describe("usePlayer", () => {
   describe("normal move", () => {
-    beforeEach(() => {
-      const map = [
-        [2, 2, 2],
-        [2, 2, 2],
-        [2, 2, 2],
-      ];
-      const { dispatch } = setupStore();
-      dispatch(storeSetupMap(map));
-    });
-
     it("should move to left", () => {
       const { result: player } = setupHooks(usePlayer, true);
 
@@ -64,16 +62,6 @@ describe("usePlayer", () => {
   });
 
   describe("at the edge of map", () => {
-    beforeEach(() => {
-      const map = [
-        [2, 2, 2],
-        [2, 2, 2],
-        [2, 2, 2],
-      ];
-      const { dispatch } = setupStore();
-      dispatch(storeSetupMap(map));
-    });
-
     it("should not move to left when the player is already at the left edge of the map", () => {
       const position = { x: 0, y: 0 };
       const { result: player } = setupHooks(usePlayer, true);
