@@ -1,13 +1,18 @@
+import EditElementContainerView from "@/components/edit/EditElementContainerView";
+import EditMapView from "@/components/edit/EditMap";
+import { EditPlayerView } from "@/components/edit/EditPlayer";
+
 export default function EditView() {
   return (
     <div>
       <div className="flex">
         <div className=" w-4/6 bg-pink-400">
-          <div>地图编辑区</div>
+          <EditMapView></EditMapView>
+          <EditPlayerView></EditPlayerView>
         </div>
         <div>数据展示区</div>
       </div>
-      <div>元素选择区</div>
+      <EditElementContainerView></EditElementContainerView>
     </div>
   );
 }

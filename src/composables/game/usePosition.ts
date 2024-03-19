@@ -5,11 +5,14 @@ export interface Position {
   y: number;
 }
 
-export function usePosition(pos: Position) {
+export const STEP_GAME = 32;
+export const STEP_EDIT = 34;
+
+export function usePosition(pos: Position, step: number = STEP_GAME) {
   const position = useMemo(() => {
     return {
-      left: pos.x * 32 + "px",
-      top: pos.y * 32 + "px",
+      left: pos.x * step + "px",
+      top: pos.y * step + "px",
     };
   }, [pos]);
 
