@@ -1,4 +1,4 @@
-import { selectEditPlayer, storeUpdatePlayer } from "@/store/features/EditPlayer";
+import { selectEditPlayer, storeRemovePlayer, storeUpdatePlayer } from "@/store/features/EditPlayer";
 import { useAppDispatch, useAppSelector } from "@/store/useHooks";
 
 import { Position } from "../game/usePosition";
@@ -11,8 +11,13 @@ export function useEditPlayer() {
     dispatch(storeUpdatePlayer(position));
   }
 
+  function removePlayer() {
+    dispatch(storeRemovePlayer());
+  }
+
   return {
     storePlayer,
     updatePlayer,
+    removePlayer,
   };
 }

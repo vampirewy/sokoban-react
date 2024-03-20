@@ -16,10 +16,14 @@ const EditPlayerReducer = createSlice({
     storeUpdatePlayer: (state, action: PayloadAction<{ x: number; y: number }>) => {
       state.player = action.payload;
     },
+    storeRemovePlayer: (state) => {
+      state.player.x = -1;
+      state.player.y = -1;
+    },
   },
 });
 
-export const { storeUpdatePlayer } = EditPlayerReducer.actions;
+export const { storeUpdatePlayer, storeRemovePlayer } = EditPlayerReducer.actions;
 
 export const selectEditPlayer = (state: RootState) => state.editPlayer.player;
 
