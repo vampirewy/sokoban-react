@@ -1,10 +1,10 @@
 import EditELementView from "@/components/edit/EditElementView";
 import { useEditElement } from "@/composables/edit/editElement";
 import { useEditMap } from "@/composables/edit/editMap";
-import { useEffect, useMemo } from "react";
+import { ChangeEvent, useEffect, useMemo } from "react";
 
 export default function EditElementView() {
-  const { initEditMap } = useEditMap();
+  const { initEditMap, updateMapRow, setCol, setRow, storeCol, storeRow, storeMap } = useEditMap();
   const {
     floorEditElement,
     wallEditElement,
@@ -19,14 +19,38 @@ export default function EditElementView() {
     return storeCurrentEditElement.name;
   }, [storeCurrentEditElement]);
 
+  function handleRow(e: ChangeEvent<HTMLInputElement>) {
+    console.log(e.target);
+    setRow(e.target.value);
+  }
+
+  function handleCol(e: ChangeEvent<HTMLInputElement>) {
+    setCol(e.target.value);
+  }
+
   useEffect(() => {
     initEditMap();
   }, []);
+
+  useEffect(() => {
+    if (!storeRow) return;
+    if (storeMap.length) {
+      updateMapRow();
+    }
+  }, [storeRow, storeMap]);
 
   return (
     <div>
       <h3>元素选择区</h3>
       {/* TODO: 添加行和列 */}
+      <div className="m-2">
+        行:
+        <input type="text" className="border border-black" value={storeRow} onChange={(e) => handleRow(e)} />
+      </div>
+      <div className="m-2">
+        列:
+        <input type="text" className="border border-black" value={storeCol} onChange={(e) => handleCol(e)} />
+      </div>
 
       <div className="flex space-x-2">
         <h3>地图:</h3>

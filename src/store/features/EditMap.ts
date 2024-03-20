@@ -10,10 +10,14 @@ export type Map = MapTile[][];
 
 interface EditMapState {
   map: Map;
+  row: string;
+  col: string;
 }
 
 const initialState: EditMapState = {
   map: [],
+  row: "8",
+  col: "8",
 };
 
 const EditMapReducer = createSlice({
@@ -29,11 +33,35 @@ const EditMapReducer = createSlice({
     storeSetFloorInMap: (state, action: PayloadAction<{ x: number; y: number }>) => {
       state.map[action.payload.y][action.payload.x] = MapTile.FLOOR;
     },
+    storeSetRow: (state, action: PayloadAction<string>) => {
+      state.row = action.payload;
+    },
+    storeSetCol: (state, action: PayloadAction<string>) => {
+      state.col = action.payload;
+    },
+    storeIncreaseMapRow: (state, action: PayloadAction<MapTile[]>) => {
+      state.map.push(action.payload);
+    },
+    storeDecreaseMapRow: (state, action: PayloadAction<number>) => {
+      state.map.splice(state.map.length - action.payload, state.map.length);
+    },
   },
 });
 
-export const selectEditMap = (state: RootState): Map => state.editMap.map;
+export const selectEditMap = (state: RootState) => state.editMap.map;
 
-export const { storeSetWallInMap, storeSetFloorInMap, storeInitMap } = EditMapReducer.actions;
+export const selectEditMapRow = (state: RootState) => state.editMap.row;
+
+export const selectEditMapCol = (state: RootState) => state.editMap.col;
+
+export const {
+  storeSetWallInMap,
+  storeSetFloorInMap,
+  storeInitMap,
+  storeSetCol,
+  storeSetRow,
+  storeIncreaseMapRow,
+  storeDecreaseMapRow,
+} = EditMapReducer.actions;
 
 export default EditMapReducer.reducer;

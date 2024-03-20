@@ -2,6 +2,7 @@ import EditCargosView from "@/components/edit/EditCargos";
 import EditElementContainerView from "@/components/edit/EditElementContainerView";
 import EditMapView from "@/components/edit/EditMap";
 import { EditPlayerView } from "@/components/edit/EditPlayer";
+import EditShowDataView from "@/components/edit/EditShowData";
 import EditTargetView from "@/components/edit/EditTargets";
 import { useEditCargo } from "@/composables/edit/editCargo";
 import { useEditTarget } from "@/composables/edit/editTarget";
@@ -15,6 +16,7 @@ export default function EditView() {
       <div className="flex">
         <div className=" w-4/6 bg-pink-400">
           <EditMapView></EditMapView>
+
           <EditPlayerView></EditPlayerView>
 
           {storeCargos.map((cargo) => (
@@ -25,7 +27,7 @@ export default function EditView() {
             <EditTargetView key={target.id} target={target}></EditTargetView>
           ))}
         </div>
-        <div>数据展示区</div>
+        <EditShowDataView></EditShowDataView>
       </div>
       <EditElementContainerView></EditElementContainerView>
     </div>
