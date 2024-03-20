@@ -22,10 +22,12 @@ export default function MapBlockView(props: Props) {
   const { getCurrentEditElement } = useEditElement();
 
   function handleClick() {
-    // 假设先放置墙
-    // 已知有坐标 x , y ，可以知道我点击了哪个方块，然后将这个方块中的数据进行修改
     getCurrentEditElement().execute(props);
   }
+
+  // function handleMouseMove() {
+  //   console.log("mouse move");
+  // }
 
   return (
     <div className="border border-white" onClick={handleClick}>

@@ -51,4 +51,28 @@ describe("use edit element", () => {
 
     expect(store.getState().editPlayer.player).toEqual({ x: 2, y: 2 });
   });
+
+  it("should add cargo when edit element is cargo", () => {
+    const { result: editElement } = setupHooks(() => useEditElement(), true);
+
+    const cargosEditElement = editElement.current.cargosEditElement;
+
+    act(() => editElement.current.setCurrentEditElement(currentElement(cargosEditElement.name, cargosEditElement.img)));
+    act(() => editElement.current.getCurrentEditElement().execute({ x: 3, y: 3 }));
+
+    expect(store.getState().editCargo.cargos.length).toBe(1);
+  });
+
+  it("should add target when edit element is target", () => {
+    const { result: editElement } = setupHooks(() => useEditElement(), true);
+
+    const targetsEditElement = editElement.current.targetsEditElement;
+
+    act(() =>
+      editElement.current.setCurrentEditElement(currentElement(targetsEditElement.name, targetsEditElement.img))
+    );
+    act(() => editElement.current.getCurrentEditElement().execute({ x: 4, y: 4 }));
+
+    expect(store.getState().editTarget.targets.length).toBe(1);
+  });
 });

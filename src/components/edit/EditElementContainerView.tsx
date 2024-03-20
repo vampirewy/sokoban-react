@@ -5,7 +5,14 @@ import { useEffect, useMemo } from "react";
 
 export default function EditElementView() {
   const { initEditMap } = useEditMap();
-  const { floorEditElement, wallEditElement, playerEditElement, storeCurrentEditElement } = useEditElement();
+  const {
+    floorEditElement,
+    wallEditElement,
+    playerEditElement,
+    cargosEditElement,
+    targetsEditElement,
+    storeCurrentEditElement,
+  } = useEditElement();
 
   const currentElement = useMemo(() => {
     if (!storeCurrentEditElement.name) return "未选择";
@@ -29,6 +36,14 @@ export default function EditElementView() {
       <div className="flex space-x-2">
         <h3>玩家:</h3>
         <EditELementView editElement={{ name: playerEditElement.name, img: playerEditElement.img }}></EditELementView>
+      </div>
+      <div className="flex space-x-2">
+        <h3>箱子:</h3>
+        <EditELementView editElement={{ name: cargosEditElement.name, img: cargosEditElement.img }}></EditELementView>
+      </div>
+      <div className="flex space-x-2">
+        <h3>放置点:</h3>
+        <EditELementView editElement={{ name: targetsEditElement.name, img: targetsEditElement.img }}></EditELementView>
       </div>
       <div className="flex space-x-2">
         <h3>当前选择: {currentElement} </h3>
