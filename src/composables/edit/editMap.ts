@@ -3,7 +3,9 @@ import {
   selectEditMap,
   selectEditMapCol,
   selectEditMapRow,
+  storeDecreaseMapCol,
   storeDecreaseMapRow,
+  storeIncreaseMapCol,
   storeIncreaseMapRow,
   storeInitMap,
   storeSetCol,
@@ -66,7 +68,17 @@ export function useEditMap() {
   }
 
   function updateMapCol() {
-    // TODO: 更新列
+    const oldCol = storeMap[0].length;
+
+    if (Number(storeCol) > oldCol) {
+      const diff = Number(storeCol) - oldCol;
+
+      dispatch(storeIncreaseMapCol(Array(diff).fill(MapTile.FLOOR)));
+    } else if (Number(storeCol) < oldCol) {
+      const diff = oldCol - Number(storeCol);
+
+      dispatch(storeDecreaseMapCol(diff));
+    }
   }
 
   return {

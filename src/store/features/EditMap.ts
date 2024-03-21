@@ -45,6 +45,16 @@ const EditMapReducer = createSlice({
     storeDecreaseMapRow: (state, action: PayloadAction<number>) => {
       state.map.splice(state.map.length - action.payload, state.map.length);
     },
+    storeIncreaseMapCol: (state, action: PayloadAction<MapTile[]>) => {
+      state.map.forEach((row) => {
+        row.push(...action.payload);
+      });
+    },
+    storeDecreaseMapCol: (state, action: PayloadAction<number>) => {
+      state.map.forEach((row) => {
+        row.splice(row.length - action.payload, row.length);
+      });
+    },
   },
 });
 
@@ -62,6 +72,8 @@ export const {
   storeSetRow,
   storeIncreaseMapRow,
   storeDecreaseMapRow,
+  storeIncreaseMapCol,
+  storeDecreaseMapCol,
 } = EditMapReducer.actions;
 
 export default EditMapReducer.reducer;

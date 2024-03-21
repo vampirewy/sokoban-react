@@ -4,7 +4,7 @@ import { useEditMap } from "@/composables/edit/editMap";
 import { ChangeEvent, useEffect, useMemo } from "react";
 
 export default function EditElementView() {
-  const { initEditMap, updateMapRow, setCol, setRow, storeCol, storeRow, storeMap } = useEditMap();
+  const { initEditMap, updateMapRow, updateMapCol, setCol, setRow, storeCol, storeRow, storeMap } = useEditMap();
   const {
     floorEditElement,
     wallEditElement,
@@ -20,7 +20,6 @@ export default function EditElementView() {
   }, [storeCurrentEditElement]);
 
   function handleRow(e: ChangeEvent<HTMLInputElement>) {
-    console.log(e.target);
     setRow(e.target.value);
   }
 
@@ -39,10 +38,16 @@ export default function EditElementView() {
     }
   }, [storeRow, storeMap]);
 
+  useEffect(() => {
+    if (!storeCol) return;
+    if (storeMap.length) {
+      updateMapCol();
+    }
+  }, [storeCol, storeMap]);
+
   return (
     <div>
       <h3>元素选择区</h3>
-      {/* TODO: 添加行和列 */}
       <div className="m-2">
         行:
         <input type="text" className="border border-black" value={storeRow} onChange={(e) => handleRow(e)} />
