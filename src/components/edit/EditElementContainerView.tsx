@@ -32,17 +32,33 @@ export default function EditElementView() {
   }, []);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     if (!storeRow) return;
     if (storeMap.length) {
-      updateMapRow();
+      timer = setTimeout(() => {
+        updateMapRow();
+      }, 500);
     }
+
+    return () => {
+      timer && clearTimeout(timer);
+    };
   }, [storeRow, storeMap]);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     if (!storeCol) return;
     if (storeMap.length) {
-      updateMapCol();
+      setTimeout(() => {
+        updateMapCol();
+      }, 500);
     }
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [storeCol, storeMap]);
 
   return (
