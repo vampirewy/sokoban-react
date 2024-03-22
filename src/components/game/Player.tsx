@@ -1,13 +1,13 @@
 import playerImg from "@/assets/keeper.png";
 
-import { useEffect } from "react";
-import { usePosition } from "@/composables/game/usePosition";
 import { usePlayer } from "@/composables/game/usePlayer";
+import { usePosition } from "@/composables/game/usePosition";
+import { useEffect } from "react";
 
 export default function Player() {
-  const { player, movePlayerToDown, movePlayerToLeft, movePlayerToRight, movePlayerToTop } = usePlayer();
+  const { storePlayer, movePlayerToDown, movePlayerToLeft, movePlayerToRight, movePlayerToTop } = usePlayer();
 
-  const { position } = usePosition(player);
+  const { position } = usePosition(storePlayer);
 
   useMove();
 

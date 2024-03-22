@@ -1,9 +1,9 @@
+import { type GameData } from "@/game/gameData";
 import { useState } from "react";
 import { useCargo } from "./useCargo";
-import { useTarget } from "./useTarget";
 import { useMap } from "./useMap";
 import { usePlayer } from "./usePlayer";
-import { type GameData } from "@/game/gameData";
+import { useTarget } from "./useTarget";
 
 interface Game {
   isGameCompleted: boolean;
@@ -24,6 +24,8 @@ export function useGame() {
   });
 
   function setupLevel() {
+    if (gameStatus.level - 1 === _gameData.length) return;
+
     cleanCargos();
     cleanTargets();
 
@@ -44,13 +46,6 @@ export function useGame() {
     _gameData = gameData;
 
     setupLevel();
-
-    setGameStatus((prev) => {
-      return {
-        ...prev,
-        level: prev.level + 1,
-      };
-    });
   }
 
   function toNextLevel() {
@@ -60,6 +55,7 @@ export function useGame() {
         isGameCompleted: false,
       };
     });
+
     setupLevel();
   }
 
@@ -72,10 +68,21 @@ export function useGame() {
     });
   }
 
+  function updateGameLevel() {
+    setGameStatus((prev) => {
+      return {
+        ...prev,
+        level: prev.level + 1,
+      };
+    });
+  }
+
   return {
     gameStatus,
+    setGameStatus,
     setupGame,
     toNextLevel,
     detectGameCompleted,
+    updateGameLevel,
   };
 }

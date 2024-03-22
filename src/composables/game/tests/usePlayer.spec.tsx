@@ -1,7 +1,7 @@
-import { beforeEach, describe, it, expect } from "vitest";
-import { act } from "@testing-library/react";
-import { setupHooks, setupStore } from "@/tests/helper";
 import { storeSetupMap } from "@/store/features/Map";
+import { setupHooks, setupStore } from "@/tests/helper";
+import { act } from "@testing-library/react";
+import { beforeEach, describe, expect, it } from "vitest";
 import { usePlayer } from "../usePlayer";
 
 const map = [
@@ -22,8 +22,8 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToLeft());
 
-      expect(player.current.player.x).toBe(position.x - 1);
-      expect(player.current.player.y).toBe(position.y);
+      expect(player.current.storePlayer.x).toBe(position.x - 1);
+      expect(player.current.storePlayer.y).toBe(position.y);
     });
 
     it("should move to right", () => {
@@ -34,8 +34,8 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToRight());
 
-      expect(player.current.player.x).toBe(position.x + 1);
-      expect(player.current.player.y).toBe(position.y);
+      expect(player.current.storePlayer.x).toBe(position.x + 1);
+      expect(player.current.storePlayer.y).toBe(position.y);
     });
 
     it("should move to up", () => {
@@ -45,8 +45,8 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToTop());
 
-      expect(player.current.player.x).toBe(position.x);
-      expect(player.current.player.y).toBe(position.y - 1);
+      expect(player.current.storePlayer.x).toBe(position.x);
+      expect(player.current.storePlayer.y).toBe(position.y - 1);
     });
 
     it("should move to down", () => {
@@ -56,8 +56,8 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToDown());
 
-      expect(player.current.player.x).toBe(position.x);
-      expect(player.current.player.y).toBe(position.y + 1);
+      expect(player.current.storePlayer.x).toBe(position.x);
+      expect(player.current.storePlayer.y).toBe(position.y + 1);
     });
   });
 
@@ -69,7 +69,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToLeft());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to right when the player is already at the right edge of the map", () => {
@@ -79,7 +79,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToRight());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to top when the player is already at the top edge of the map", () => {
@@ -89,7 +89,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToTop());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to down when the player is already at the down edge of the map", () => {
@@ -99,7 +99,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToDown());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
   });
 
@@ -124,7 +124,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition({ x: 1, y: 1 }));
       act(() => player.current.movePlayerToLeft());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to right when collision is wall", () => {
@@ -134,7 +134,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToRight());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to top when collision is wall", () => {
@@ -144,7 +144,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToTop());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
 
     it("should not move to down when collision is wall", () => {
@@ -154,7 +154,7 @@ describe("usePlayer", () => {
       act(() => player.current.resetPlayerPosition(position));
       act(() => player.current.movePlayerToDown());
 
-      expect(player.current.player).toEqual(position);
+      expect(player.current.storePlayer).toEqual(position);
     });
   });
 });

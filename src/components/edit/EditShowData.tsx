@@ -15,10 +15,19 @@ export default function EditShowDataView() {
     return {
       map: storeMap,
       player: storePlayer,
-      cargos: storeCargos,
-      targets: storeTargets,
+      cargos: filterId(storeCargos),
+      targets: filterId(storeTargets),
     };
   }, [storeMap, storeCargos, storePlayer, storeTargets]);
+
+  function filterId(array: { x: number; y: number; id: number }[]) {
+    return array.map(({ x, y }) => {
+      return {
+        x,
+        y,
+      };
+    });
+  }
 
   function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
     console.log(e.target.value);

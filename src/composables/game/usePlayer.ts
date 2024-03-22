@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { moveDistance, resetPosition, selectPlayer } from "@/store/features/Player";
 import { useCargo } from "@/composables/game/useCargo";
 import { useMap } from "@/composables/game/useMap";
+import { moveDistance, resetPosition, selectPlayer } from "@/store/features/Player";
+import { useAppDispatch, useAppSelector } from "@/store/useHooks";
 
 interface Position {
   x: number;
@@ -98,7 +98,7 @@ export function usePlayer() {
   // }, [storePlayer.x, storePlayer.y, dispatch]);
 
   return {
-    player: storePlayer,
+    storePlayer,
     movePlayerToLeft,
     movePlayerToRight,
     movePlayerToTop,
