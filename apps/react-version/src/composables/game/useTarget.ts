@@ -1,7 +1,10 @@
-import { generateId } from "@/game/gameData";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { selectTargets, storeAddTargets, storeCleanTargets, type Target } from "@/store/features/Target";
-import { type Position } from "./usePosition";
+import type { Target } from '@/store/features/Target';
+
+import { generateId } from '@/game/gameData';
+import { selectTargets, storeAddTargets, storeCleanTargets } from '@/store/features/Target';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
+
+import { type Position } from './usePosition';
 
 export function useTarget() {
   const dispatch = useAppDispatch();

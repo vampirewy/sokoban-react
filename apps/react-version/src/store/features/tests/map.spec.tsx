@@ -1,10 +1,11 @@
-import { describe, it, expect } from "vitest";
-import store from "../../store";
-import { storeSetupMap } from "../Map";
-import { setupStore } from "@/tests/helper";
+import { setupStore } from '@/tests/helper';
+import { describe, expect, it } from 'vitest';
 
-describe("map store", () => {
-  it("should setup the map", () => {
+import store from '../../store';
+import { storeSetupMap } from '../Map';
+
+describe('map store', () => {
+  it('should setup the map', () => {
     const initMap = [
       [1, 1, 1, 1, 1, 1, 1],
       [1, 2, 2, 2, 2, 2, 1],

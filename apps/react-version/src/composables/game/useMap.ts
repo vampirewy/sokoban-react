@@ -1,5 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { MapTile, type Map, selectMap, storeSetupMap } from "@/store/features/Map";
+import type { Map } from '@/store/features/Map';
+
+import { MapTile, selectMap, storeSetupMap } from '@/store/features/Map';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
 
 interface Position {
   x: number;

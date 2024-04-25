@@ -1,9 +1,17 @@
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { storeAddCargos, selectCargos, storeMoveCargo, storeCleanCargos, type Cargo } from "@/store/features/Cargos";
-import { useMap } from "@/composables/game/useMap";
-import { useTarget } from "./useTarget";
-import { generateId } from "@/game/gameData";
-import { type Position } from "./usePosition";
+import type { Cargo } from '@/store/features/Cargos';
+
+import { useMap } from '@/composables/game/useMap';
+import { generateId } from '@/game/gameData';
+import {
+  selectCargos,
+  storeAddCargos,
+  storeCleanCargos,
+  storeMoveCargo,
+} from '@/store/features/Cargos';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
+
+import { type Position } from './usePosition';
+import { useTarget } from './useTarget';
 
 export function useCargo() {
   const { isWall, detectEdgeOfMap } = useMap();

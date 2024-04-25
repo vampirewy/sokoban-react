@@ -12,8 +12,8 @@ import {
   storeSetFloorInMap,
   storeSetRow,
   storeSetWallInMap,
-} from "@/store/features/EditMap";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
+} from '@/store/features/EditMap';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
 
 export function useEditMap() {
   const storeMap = useAppSelector(selectEditMap);

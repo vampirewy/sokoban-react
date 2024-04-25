@@ -1,13 +1,12 @@
-import { useEffect } from "react";
-
-import Cargo from "@/components/game/Cargo";
-import Map from "@/components/game/Map";
-import Player from "@/components/game/Player";
-import Target from "@/components/game/Target";
-import { useCargo } from "@/composables/game/useCargo";
-import { useGame } from "@/composables/game/useGame";
-import { useTarget } from "@/composables/game/useTarget";
-import { gameData } from "@/game/gameData";
+import Cargo from '@/components/game/Cargo';
+import Map from '@/components/game/Map';
+import Player from '@/components/game/Player';
+import Target from '@/components/game/Target';
+import { useCargo } from '@/composables/game/useCargo';
+import { useGame } from '@/composables/game/useGame';
+import { useTarget } from '@/composables/game/useTarget';
+import { gameData } from '@/game/gameData';
+import { useEffect } from 'react';
 
 export default function GameView() {
   const { setupGame, gameStatus, updateGameLevel, toNextLevel, detectGameCompleted } = useGame();
@@ -37,18 +36,27 @@ export default function GameView() {
       <Map></Map>
 
       {storeTargets.map((target) => (
-        <Target key={target.id} target={target}></Target>
+        <Target
+          key={target.id}
+          target={target}
+        ></Target>
       ))}
 
       {storeCargos.map((cargo) => (
-        <Cargo key={cargo.id} cargo={cargo}></Cargo>
+        <Cargo
+          key={cargo.id}
+          cargo={cargo}
+        ></Cargo>
       ))}
 
       <Player></Player>
 
       <div>
         {gameStatus.isGameCompleted && (
-          <div className=" bg-red-500" onClick={handleClick}>
+          <div
+            className=" bg-red-500"
+            onClick={handleClick}
+          >
             下一关
           </div>
         )}

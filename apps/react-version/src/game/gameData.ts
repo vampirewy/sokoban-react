@@ -1,4 +1,5 @@
-import { type Map } from "@/store/features/Map";
+import { type Map } from '@/store/features/Map';
+
 let id = 0;
 
 export function generateId() {

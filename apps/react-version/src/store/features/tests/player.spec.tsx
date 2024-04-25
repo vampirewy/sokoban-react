@@ -1,11 +1,12 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import store from "../../store";
-import { setupStore } from "@/tests/helper";
-import { storeSetupMap } from "../Map";
-import { moveDistance, resetPosition } from "../Player";
+import { setupStore } from '@/tests/helper';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-describe("player store", () => {
-  describe("normal move", () => {
+import store from '../../store';
+import { storeSetupMap } from '../Map';
+import { moveDistance, resetPosition } from '../Player';
+
+describe('player store', () => {
+  describe('normal move', () => {
     beforeEach(() => {
       const map = [
         [2, 2, 2],
@@ -16,7 +17,7 @@ describe("player store", () => {
       dispatch(storeSetupMap(map));
     });
 
-    it("should move to the left", () => {
+    it('should move to the left', () => {
       const position = { x: 1, y: 1 };
 
       const { dispatch } = setupStore();
@@ -28,7 +29,7 @@ describe("player store", () => {
       expect(store.getState().player.player.y).toBe(position.y);
     });
 
-    it("should move to the right", () => {
+    it('should move to the right', () => {
       const position = { x: 1, y: 1 };
 
       const { dispatch } = setupStore();
@@ -40,7 +41,7 @@ describe("player store", () => {
       expect(store.getState().player.player.y).toBe(position.y);
     });
 
-    it("should move to the up", () => {
+    it('should move to the up', () => {
       const position = { x: 1, y: 1 };
 
       const { dispatch } = setupStore();
@@ -52,7 +53,7 @@ describe("player store", () => {
       expect(store.getState().player.player.y).toBe(position.y - 1);
     });
 
-    it("should move to the down", () => {
+    it('should move to the down', () => {
       const position = { x: 1, y: 1 };
 
       const { dispatch } = setupStore();

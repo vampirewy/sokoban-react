@@ -1,9 +1,9 @@
-import { useEditCargo } from "@/composables/edit/editCargo";
-import { useEditMap } from "@/composables/edit/editMap";
-import { useEditPlayer } from "@/composables/edit/editPlayer";
-import { useEditTarget } from "@/composables/edit/editTarget";
-import { LevelGameData } from "@/game/gameData";
-import { ChangeEvent, useMemo } from "react";
+import { useEditCargo } from '@/composables/edit/editCargo';
+import { useEditMap } from '@/composables/edit/editMap';
+import { useEditPlayer } from '@/composables/edit/editPlayer';
+import { useEditTarget } from '@/composables/edit/editTarget';
+import { LevelGameData } from '@/game/gameData';
+import { ChangeEvent, useMemo } from 'react';
 
 export default function EditShowDataView() {
   const { storeMap } = useEditMap();

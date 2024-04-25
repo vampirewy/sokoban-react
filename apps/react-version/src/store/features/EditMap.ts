@@ -1,5 +1,7 @@
-import { type RootState } from "@/store/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+import { type RootState } from '@/store/store';
+import { createSlice } from '@reduxjs/toolkit';
 
 export enum MapTile {
   WALL = 1,
@@ -16,12 +18,12 @@ interface EditMapState {
 
 const initialState: EditMapState = {
   map: [],
-  row: "8",
-  col: "8",
+  row: '8',
+  col: '8',
 };
 
 const EditMapReducer = createSlice({
-  name: "editMap",
+  name: 'editMap',
   initialState,
   reducers: {
     storeInitMap: (state, action: PayloadAction<Map>) => {

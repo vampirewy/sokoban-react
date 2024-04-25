@@ -1,9 +1,10 @@
-import { type GameData } from "@/game/gameData";
-import { useState } from "react";
-import { useCargo } from "./useCargo";
-import { useMap } from "./useMap";
-import { usePlayer } from "./usePlayer";
-import { useTarget } from "./useTarget";
+import { type GameData } from '@/game/gameData';
+import { useState } from 'react';
+
+import { useCargo } from './useCargo';
+import { useMap } from './useMap';
+import { usePlayer } from './usePlayer';
+import { useTarget } from './useTarget';
 
 interface Game {
   isGameCompleted: boolean;

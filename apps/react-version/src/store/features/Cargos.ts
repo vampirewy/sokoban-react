@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { type RootState } from "@/store/store";
+import { type RootState } from '@/store/store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Cargo {
   x: number;
@@ -17,13 +17,21 @@ const initialState: CargosState = {
 };
 
 const CargosReducer = createSlice({
-  name: "cargos",
+  name: 'cargos',
   initialState,
   reducers: {
     storeAddCargos: (state, action: PayloadAction<Cargo>) => {
       state.cargos.push(action.payload);
     },
-    storeMoveCargo: (state, action: PayloadAction<{ cargo: Cargo; dx: number; dy: number; isTarget: boolean }>) => {
+    storeMoveCargo: (
+      state,
+      action: PayloadAction<{
+        cargo: Cargo;
+        dx: number;
+        dy: number;
+        isTarget: boolean;
+      }>,
+    ) => {
       state.cargos = updateCargos(state.cargos, action.payload);
     },
     storeCleanCargos: (state) => {
@@ -34,7 +42,7 @@ const CargosReducer = createSlice({
 
 function updateCargos(
   cargos: Cargo[],
-  { cargo, dx, dy, isTarget }: { cargo: Cargo; dx: number; dy: number; isTarget: boolean }
+  { cargo, dx, dy, isTarget }: { cargo: Cargo; dx: number; dy: number; isTarget: boolean },
 ) {
   return cargos.map((c) => {
     if (c.id === cargo.id) {

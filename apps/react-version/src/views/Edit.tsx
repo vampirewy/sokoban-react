@@ -1,11 +1,11 @@
-import EditCargosView from "@/components/edit/EditCargos";
-import EditElementContainerView from "@/components/edit/EditElementContainerView";
-import EditMapView from "@/components/edit/EditMap";
-import { EditPlayerView } from "@/components/edit/EditPlayer";
-import EditShowDataView from "@/components/edit/EditShowData";
-import EditTargetView from "@/components/edit/EditTargets";
-import { useEditCargo } from "@/composables/edit/editCargo";
-import { useEditTarget } from "@/composables/edit/editTarget";
+import EditCargosView from '@/components/edit/EditCargos';
+import EditElementContainerView from '@/components/edit/EditElementContainerView';
+import EditMapView from '@/components/edit/EditMap';
+import { EditPlayerView } from '@/components/edit/EditPlayer';
+import EditShowDataView from '@/components/edit/EditShowData';
+import EditTargetView from '@/components/edit/EditTargets';
+import { useEditCargo } from '@/composables/edit/editCargo';
+import { useEditTarget } from '@/composables/edit/editTarget';
 
 export default function EditView() {
   const { storeCargos } = useEditCargo();
@@ -20,11 +20,17 @@ export default function EditView() {
           <EditPlayerView></EditPlayerView>
 
           {storeCargos.map((cargo) => (
-            <EditCargosView key={cargo.id} cargo={cargo}></EditCargosView>
+            <EditCargosView
+              key={cargo.id}
+              cargo={cargo}
+            ></EditCargosView>
           ))}
 
           {storeTargets.map((target) => (
-            <EditTargetView key={target.id} target={target}></EditTargetView>
+            <EditTargetView
+              key={target.id}
+              target={target}
+            ></EditTargetView>
           ))}
         </div>
         <EditShowDataView></EditShowDataView>

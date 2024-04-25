@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { type RootState } from "../store";
-import { type PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+import { createSlice } from '@reduxjs/toolkit';
+
+import { type RootState } from '../store';
 
 export interface Player {
   x: number;
@@ -16,7 +18,7 @@ const initialState: PlayerState = {
 };
 
 const PlayerReducer = createSlice({
-  name: "player",
+  name: 'player',
   initialState,
   reducers: {
     moveDistance: (state, action: PayloadAction<{ x: number; y: number }>) => {

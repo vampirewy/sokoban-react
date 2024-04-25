@@ -1,7 +1,11 @@
-import { selectEditPlayer, storeRemovePlayer, storeUpdatePlayer } from "@/store/features/EditPlayer";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
+import {
+  selectEditPlayer,
+  storeRemovePlayer,
+  storeUpdatePlayer,
+} from '@/store/features/EditPlayer';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
 
-import { Position } from "../game/usePosition";
+import { Position } from '../game/usePosition';
 
 export function useEditPlayer() {
   const dispatch = useAppDispatch();

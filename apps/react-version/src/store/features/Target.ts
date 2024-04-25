@@ -1,5 +1,5 @@
-import { type RootState } from "@/store/store";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { type RootState } from '@/store/store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Target {
   x: number;
@@ -16,7 +16,7 @@ const initialState: TargetState = {
 };
 
 const TargetReducers = createSlice({
-  name: "target",
+  name: 'target',
   initialState,
   reducers: {
     storeAddTargets: (state, action: PayloadAction<Target>) => {

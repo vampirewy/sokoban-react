@@ -1,5 +1,7 @@
-import { type RootState } from "@/store/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+import { type RootState } from '@/store/store';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface EditCargo {
   x: number;
@@ -16,7 +18,7 @@ const initialState: EditCargoState = {
 };
 
 const EditCargoReducer = createSlice({
-  name: "editCargo",
+  name: 'editCargo',
   initialState,
   reducers: {
     storeAddCargo(state, action: PayloadAction<EditCargo>) {

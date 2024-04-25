@@ -1,11 +1,12 @@
-import { describe, it, expect } from "vitest";
-import { act } from "@testing-library/react";
-import store from "@/store/store";
-import { setupHooks } from "@/tests/helper";
-import { useMap } from "../useMap";
+import store from '@/store/store';
+import { setupHooks } from '@/tests/helper';
+import { act } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
-describe("use map", () => {
-  it("should setup the map", () => {
+import { useMap } from '../useMap';
+
+describe('use map', () => {
+  it('should setup the map', () => {
     const initMap = [
       [1, 1, 1, 1, 1],
       [1, 2, 2, 2, 1],

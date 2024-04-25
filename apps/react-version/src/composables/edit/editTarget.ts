@@ -1,13 +1,14 @@
-import { generateId } from "@/game/gameData";
+import { generateId } from '@/game/gameData';
 import {
   EditTarget,
   selectTargets,
   storeAddTarget,
   storeCleanTargets,
   storeRemoveTarget,
-} from "@/store/features/EditTarget";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { Position } from "../game/usePosition";
+} from '@/store/features/EditTarget';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
+
+import { Position } from '../game/usePosition';
 
 export function useEditTarget() {
   const storeTargets = useAppSelector(selectTargets);

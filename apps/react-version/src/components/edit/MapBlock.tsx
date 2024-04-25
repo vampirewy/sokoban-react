@@ -1,9 +1,9 @@
-import floorImg from "@/assets/floor.png";
-import wallImg from "@/assets/wall.png";
-import { useEditElement } from "@/composables/edit/editElement";
-import { useEditMap } from "@/composables/edit/editMap";
-import { useDrag } from "@/composables/edit/useDrag";
-import { MapTile } from "@/store/features/Map";
+import floorImg from '@/assets/floor.png';
+import wallImg from '@/assets/wall.png';
+import { useEditElement } from '@/composables/edit/editElement';
+import { useEditMap } from '@/composables/edit/editMap';
+import { useDrag } from '@/composables/edit/useDrag';
+import { MapTile } from '@/store/features/Map';
 
 interface Props {
   x: number;
@@ -11,11 +11,23 @@ interface Props {
 }
 
 function Wall() {
-  return <img src={wallImg} draggable="false" alt="" />;
+  return (
+    <img
+      src={wallImg}
+      draggable="false"
+      alt=""
+    />
+  );
 }
 
 function Floor() {
-  return <img src={floorImg} alt="" draggable="false" />;
+  return (
+    <img
+      src={floorImg}
+      alt=""
+      draggable="false"
+    />
+  );
 }
 
 export default function MapBlockView(props: Props) {
@@ -29,11 +41,11 @@ export default function MapBlockView(props: Props) {
 
   function handleMouseUp() {
     stopDrag();
-    window.removeEventListener("mouseup", handleMouseUp);
+    window.removeEventListener('mouseup', handleMouseUp);
   }
 
   function handleMouseMove() {
-    console.log("mouse move");
+    console.log('mouse move');
     if (isDragging()) {
       getCurrentEditElement().execute(props);
     }
@@ -41,7 +53,7 @@ export default function MapBlockView(props: Props) {
 
   function handleMouseDown() {
     startDrag();
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mouseup', handleMouseUp);
   }
 
   return (

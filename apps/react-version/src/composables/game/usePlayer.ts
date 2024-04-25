@@ -1,7 +1,7 @@
-import { useCargo } from "@/composables/game/useCargo";
-import { useMap } from "@/composables/game/useMap";
-import { moveDistance, resetPosition, selectPlayer } from "@/store/features/Player";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
+import { useCargo } from '@/composables/game/useCargo';
+import { useMap } from '@/composables/game/useMap';
+import { moveDistance, resetPosition, selectPlayer } from '@/store/features/Player';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
 
 interface Position {
   x: number;

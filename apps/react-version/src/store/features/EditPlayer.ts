@@ -1,5 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from '../store';
 
 interface EditPlayerState {
   player: { x: number; y: number };
@@ -10,7 +11,7 @@ const initialState: EditPlayerState = {
 };
 
 const EditPlayerReducer = createSlice({
-  name: "editPlayer",
+  name: 'editPlayer',
   initialState,
   reducers: {
     storeUpdatePlayer: (state, action: PayloadAction<{ x: number; y: number }>) => {

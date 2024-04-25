@@ -1,4 +1,4 @@
-import GameView from "./views/Game";
+import GameView from './views/Game';
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 export interface Position {
   x: number;
@@ -11,8 +11,8 @@ export const STEP_EDIT = 34;
 export function usePosition(pos: Position, step: number = STEP_GAME) {
   const position = useMemo(() => {
     return {
-      left: pos.x * step + "px",
-      top: pos.y * step + "px",
+      left: pos.x * step + 'px',
+      top: pos.y * step + 'px',
     };
   }, [pos]);
 

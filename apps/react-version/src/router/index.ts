@@ -1,22 +1,22 @@
-import React from "react";
-import { createBrowserRouter, redirect } from "react-router-dom";
-import GameView from "@/views/Game";
-import EditView from "@/views/Edit";
+import EditView from '@/views/Edit';
+import GameView from '@/views/Game';
+import React from 'react';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
-    path: "/game",
+    path: '/game',
     element: React.createElement(GameView),
   },
   {
-    path: "/edit",
+    path: '/edit',
     element: React.createElement(EditView),
   },
   // 重定向
   {
-    path: "/",
+    path: '/',
     loader: () => {
-      return redirect("/game");
+      return redirect('/game');
     },
   },
 ]);

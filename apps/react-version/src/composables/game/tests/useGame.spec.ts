@@ -1,12 +1,13 @@
-import { LevelGameData } from "@/game/gameData";
-import { setupHooks } from "@/tests/helper";
-import { act } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
-import { useCargo } from "../useCargo";
-import { useGame } from "../useGame";
-import { useMap } from "../useMap";
-import { usePlayer } from "../usePlayer";
-import { useTarget } from "../useTarget";
+import { LevelGameData } from '@/game/gameData';
+import { setupHooks } from '@/tests/helper';
+import { act } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import { useCargo } from '../useCargo';
+import { useGame } from '../useGame';
+import { useMap } from '../useMap';
+import { usePlayer } from '../usePlayer';
+import { useTarget } from '../useTarget';
 
 const firstGameData = {
   player: {
@@ -82,7 +83,7 @@ let target: any;
 let game: any;
 let player: any;
 
-describe("use game", () => {
+describe('use game', () => {
   beforeEach(() => {
     const initMap = [
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -107,7 +108,7 @@ describe("use game", () => {
     act(() => target.current.cleanTargets());
   });
 
-  it("should init game data", () => {
+  it('should init game data', () => {
     act(() => game.current.setupGame(gameData));
 
     expectSetupLevelGameData(firstGameData);
@@ -126,15 +127,15 @@ describe("use game", () => {
     expectSetupLevelGameData(secondGameData);
   });
 
-  describe("should return isGameCompleted status", () => {
-    it("should return isGameCompleted true when all cargos are on targets", () => {
+  describe('should return isGameCompleted status', () => {
+    it('should return isGameCompleted true when all cargos are on targets', () => {
       setCargosInTargets();
       act(() => game.current.detectGameCompleted());
 
       expect(game.current.gameStatus.isGameCompleted).toBe(true);
     });
 
-    it("should return isGameCompleted false when all cargos are not on targets", () => {
+    it('should return isGameCompleted false when all cargos are not on targets', () => {
       setCargosInTargets();
 
       act(() => cargo.current.moveCargo(cargo.current.storeCargos[0], 1, 0));
@@ -144,7 +145,7 @@ describe("use game", () => {
     });
   });
 
-  it("should level up when isGameCompleted was true", () => {
+  it('should level up when isGameCompleted was true', () => {
     setCargosInTargets();
 
     act(() => game.current.detectGameCompleted());

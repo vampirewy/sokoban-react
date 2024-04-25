@@ -1,18 +1,19 @@
-import { setupHooks } from "@/tests/helper";
-import { act } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
-import { useEditMap } from "../editMap";
+import { setupHooks } from '@/tests/helper';
+import { act } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-describe("use edit map", () => {
+import { useEditMap } from '../editMap';
+
+describe('use edit map', () => {
   beforeEach(() => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
-    act(() => editMap.current.setRow("8"));
-    act(() => editMap.current.setCol("8"));
+    act(() => editMap.current.setRow('8'));
+    act(() => editMap.current.setCol('8'));
     act(() => editMap.current.initEditMap());
   });
 
-  it("should init edit map", () => {
+  it('should init edit map', () => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
     act(() => editMap.current.initEditMap());
@@ -20,24 +21,24 @@ describe("use edit map", () => {
     expect(editMap.current.storeMap.length).toBe(8);
   });
 
-  it("should add line when row is increase", () => {
+  it('should add line when row is increase', () => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
     act(() => editMap.current.initEditMap());
 
-    act(() => editMap.current.setRow("10"));
+    act(() => editMap.current.setRow('10'));
 
     act(() => editMap.current.updateMapRow());
 
     expect(editMap.current.storeMap.length).toBe(10);
   });
 
-  it("should remove line when row is decrease", () => {
+  it('should remove line when row is decrease', () => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
     act(() => editMap.current.initEditMap());
 
-    act(() => editMap.current.setRow("2"));
+    act(() => editMap.current.setRow('2'));
 
     act(() => editMap.current.updateMapRow());
 
@@ -67,11 +68,11 @@ describe("use edit map", () => {
     `);
   });
 
-  it("should add column when col is increase", () => {
+  it('should add column when col is increase', () => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
     act(() => editMap.current.initEditMap());
-    act(() => editMap.current.setCol("10"));
+    act(() => editMap.current.setCol('10'));
     act(() => editMap.current.updateMapCol());
 
     expect(editMap.current.storeMap).toMatchInlineSnapshot(`
@@ -176,11 +177,11 @@ describe("use edit map", () => {
     `);
   });
 
-  it("should remove column when col is decrease", () => {
+  it('should remove column when col is decrease', () => {
     const { result: editMap } = setupHooks(() => useEditMap(), true);
 
     act(() => editMap.current.initEditMap());
-    act(() => editMap.current.setCol("2"));
+    act(() => editMap.current.setCol('2'));
     act(() => editMap.current.updateMapCol());
 
     expect(editMap.current.storeMap).toMatchInlineSnapshot(`

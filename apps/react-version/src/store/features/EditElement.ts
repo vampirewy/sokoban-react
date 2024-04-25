@@ -1,5 +1,7 @@
-import { type RootState } from "@/store/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+import { type RootState } from '@/store/store';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface StoreEditElement {
   name: string;
@@ -11,13 +13,13 @@ interface EditElementState {
 }
 const initialState: EditElementState = {
   currentEditElement: {
-    name: "",
-    img: "",
+    name: '',
+    img: '',
   },
 };
 
 const editElementReducer = createSlice({
-  name: "editElement",
+  name: 'editElement',
   initialState,
   reducers: {
     storeSetCurrentEditElement(state, action: PayloadAction<StoreEditElement>) {

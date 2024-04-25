@@ -1,5 +1,7 @@
-import { type RootState } from "@/store/store";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+import { type RootState } from '@/store/store';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface EditTarget {
   x: number;
@@ -16,7 +18,7 @@ const initialState: EditTargetState = {
 };
 
 const EditTargetReducer = createSlice({
-  name: "editTarget",
+  name: 'editTarget',
   initialState,
   reducers: {
     storeAddTarget(state, action: PayloadAction<EditTarget>) {

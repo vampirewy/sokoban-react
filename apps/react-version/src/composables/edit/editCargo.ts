@@ -1,13 +1,15 @@
-import { generateId } from "@/game/gameData";
+import type { EditCargo } from '@/store/features/EditCargo';
+
+import { generateId } from '@/game/gameData';
 import {
   selectCargos,
   storeAddCargo,
   storeCleanCargos,
   storeRemoveCargo,
-  type EditCargo,
-} from "@/store/features/EditCargo";
-import { useAppDispatch, useAppSelector } from "@/store/useHooks";
-import { Position } from "../game/usePosition";
+} from '@/store/features/EditCargo';
+import { useAppDispatch, useAppSelector } from '@/store/useHooks';
+
+import { Position } from '../game/usePosition';
 
 export function useEditCargo() {
   const dispatch = useAppDispatch();
